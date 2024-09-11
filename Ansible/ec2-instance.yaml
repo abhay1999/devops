@@ -2,14 +2,14 @@
   hosts: local
   connection: local
   vars:
-    subnet_id: "subnet-00b0898fc1fd11e34" # replace with your subnet id
-    sg_id: "sg-0bc7f605c01cc2ed2"
+    subnet_id: "subnet-0e5fc076df919b8a4" # replace with your subnet id
+    sg_id: "sg-0e55b95b6ee1d6a77"
     ami_id: "ami-09c813fb71547fc4f"
     instances:
     - mysql
     - backend
     - frontend
-    zone: vijaydevops.store
+    zone: abhay19.site
   tasks:
   - name: ansible to install boto3 and botocore
     ansible.builtin.pip:
