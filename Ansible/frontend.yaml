@@ -12,7 +12,7 @@
       name: nginx
       state: started
       enabled: yes
-      
+
   - name: remove html directory
     ansible.builtin.file:
       path: /usr/share/nginx/html
@@ -37,7 +37,7 @@
   - name: copy expense conf
     ansible.builtin.copy:
       src: expense.conf
-      dest: /etc/nginx/default.d/expense.conf
+      dest: /etc/nginx/default.d/expen.conf
 
   - name: restart nginx
     ansible.builtin.service:
