@@ -1,0 +1,70 @@
+- name: Frontend cleanup
+  hosts: frontend
+  become: yes
+  tasks:
+  
+  # Stop nginx service
+  - name: Stop nginx
+    ansible.builtin.service:
+      name: nginx
+      state: stopped
+
+  # Disable nginx service from starting on boot
+  - name: Disable nginx
+    ansible.builtin.service:
+      name: nginx
+      enabled: no
+
+  # Remove nginx package
+  - name: Uninstall nginx
+    ansible.builtin.package:
+      name: nginx
+      state: absent
+
+  # Remove HTML directory
+  - name: Remove HTML directory
+    ansible.builtin.file:
+      path: /usr/share/nginx/html
+      state: absent
+
+  # Remove the frontend zip file
+  - name: Remove frontend zip file
+    ansible.builtin.file:
+      path: /tmp/frontend.zip
+      state: absent
+
+  # Remove the NGINX expense configuration
+  - name: Remove expense configuration
+    ansible.builtin.file:
+      path: /etc/nginx/default.d/expense.conf
+      state: absent
+
+  # Clean up any remaining NGINX directories and files
+  - name: Remove NGINX default.d directory
+    ansible.builtin.file:
+      path: /etc/nginx/default.d
+      state: absent
+
+  # Optionally remove any dependencies that were installed with nginx
+  - name: Autoremove unnecessary packages
+    ansible.builtin.apt:
+      name: "{{ item }}"
+      state: absent
+    with_items:
+      - nginx
+      - nginx-common
+    when: ansible_os_family == "Debian"
+  
+  - name: Autoremove unnecessary packages (RedHat/CentOS)
+    ansible.builtin.yum:
+      name: "{{ item }}"
+      state: absent
+    with_items:
+      - nginx
+      - nginx-all-modules
+    when: ansible_os_family == "RedHat"
+
+  # Restart systemd to ensure all services are cleaned up
+  - name: Restart systemd
+    ansible.builtin.systemd:
+      daemon_reload: yes
