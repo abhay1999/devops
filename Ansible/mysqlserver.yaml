@@ -3,7 +3,7 @@
   become: yes
   vars:
     mysql_password: ExpenseApp@1
-    mysql_host: mysql.abhay19.site #172.31.91.134
+    mysql_host: 172.31.91.134 #mysql.abhay19.site 
   tasks:
   - name: install python lib PyMySQL
     ansible.builtin.pip:
