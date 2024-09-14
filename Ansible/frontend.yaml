@@ -33,15 +33,15 @@
       remote_src: yes
 
   # Remove the NGINX expense configuration
-  - name: Remove expense configuration
-    ansible.builtin.file:
-      path: /etc/nginx/default.d/expense.conf
-      state: absent
+  # - name: Remove expense configuration
+  #   ansible.builtin.file:
+  #     path: /etc/nginx/default.d/expense.conf
+  #     state: absent
 
-  # - name: copy expense conf
-  #   ansible.builtin.copy:
-  #     src: expense.conf
-  #     dest: /etc/nginx/default.d/expense.conf
+  - name: copy expense conf
+    ansible.builtin.copy:
+      src: expense.conf
+      dest: /etc/nginx/default.d/expense.conf
 
   - name: restart nginx
     ansible.builtin.service:
